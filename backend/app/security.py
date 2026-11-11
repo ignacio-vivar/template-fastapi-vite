@@ -8,7 +8,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.workbench import TableLogin
+from app.models.login import TableLogin
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 ALGORITHM = "HS256"
@@ -47,4 +47,9 @@ def get_current_login(
     login = db.get(TableLogin, login_id)
     if not login:
         raise error
+    return login
+
+def require_admin(login: TableLogin = Depends(get_current_login)):
+    if login.login_category_relationship.login_category != "admin":
+        raise HTTPException(403, "Solo administradores")
     return login

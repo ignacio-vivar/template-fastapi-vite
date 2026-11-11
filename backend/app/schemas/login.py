@@ -1,4 +1,4 @@
-# for table_login_category
+from pydantic import BaseModel, ConfigDict, Field
 
 class LoginCategoryCreate(BaseModel):
     login_category: str = Field(min_length=1)

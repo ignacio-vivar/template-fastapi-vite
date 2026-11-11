@@ -15,15 +15,15 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 from sqlalchemy.orm import joinedload
 
-ADMIN_CATEGORIES = {"admin"}  # después de la limpieza: {"admin"}
-LOWER_CATEGORIES = "not-admin"
+ADMIN_CATEGORIES = {"admin"}  
+LOWER_CATEGORIES = "not_admin"
 
 
 def resolve_role(login_category: str) -> str | None:
     if login_category in ADMIN_CATEGORIES:
         return "admin"
     if login_category == LOWER_CATEGORIES:
-        return "not-admin"
+        return "not_admin"
     return None  
 
 @router.post("/login")

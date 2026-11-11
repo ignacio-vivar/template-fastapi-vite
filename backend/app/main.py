@@ -1,8 +1,8 @@
 import os
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth
-from app.security import get_current_login
+from app.routers import auth, login_users, login_categories
+from app.security import get_current_login, require_admin
 from sqlalchemy import create_engine, text
 from sqlalchemy import inspect
 
@@ -16,9 +16,11 @@ app.add_middleware(
 )
 engine = create_engine(os.environ["DATABASE_URL"])
 protected = [Depends(get_current_login)]
+admin_only = [Depends(require_admin)]
 
 app.include_router(auth.router)
-app.include_router(login_users.router, dependencies=protected)
+app.include_router(login_users.router, dependencies=admin_only)
+app.include_router(login_categories.router, dependencies=admin_only)
 
 
 @app.get("/")
