@@ -1,0 +1,98 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 1.5rem;
+  background-color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.app-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .app-header-left {
+    align-items: flex-start;
+  }
+}
+
+.app-logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.app-datetime {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: fit-content;
+  background-color: #f1f5f9;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.app-date {
+  color: #64748b;
+}
+
+.app-divider {
+  height: 0.75rem;
+  width: 1px;
+  background-color: #cbd5e1;
+}
+
+.app-time {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .app-header-right {
+    justify-content: flex-end;
+  }
+}
+
+.logout-btn {
+  padding: 0.375rem 0.75rem;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.logout-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem;
+}

@@ -6,14 +6,12 @@ import DashboardAdminPage from "@/pages/admin/DashboardAdminPage";
 import Layout from "./components/Layout";
 import AdminLayout from "@/components/AdminLayout";
 
-import { Toaster } from "@/components/ui/sonner";
 
 
 function App() {
 
   return (
     <>
-      <Toaster richColors position="top-right" />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>

@@ -1,14 +1,9 @@
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { type loginForm, loginSchema } from "@/schemas/login.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import useLogin from "@/hooks/useLogin";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import "./login-page.css"
 
 export default function Login() {
   const {
@@ -18,68 +13,58 @@ export default function Login() {
   } = useForm<loginForm>({ resolver: zodResolver(loginSchema) });
 
   const { handlePostRequest, error } = useLogin();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data: loginForm) => {
     handlePostRequest(data);
   };
-  return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-[500px] overflow-hidden md:w-[40%] md:min-w-[400px]">
-        <CardContent className="grid md:grid-cols-1">
-          <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Bienvenido</h1>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="username">Usuario</Label>
-                <Input
-                  {...register("username")}
-                  id="username"
-                  type="text"
-                />
 
-                {errors?.username?.message && (
-                  <p className="text-red-400">{errors?.username?.message}</p>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Contraseña</Label>
-                <div className="relative">
-                  <Input
-                    {...register("password")}
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    className="w-full pr-10"
-                  />
-                  <div
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-muted-foreground"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </div>
-                </div>
-                {errors?.password?.message && (
-                  <p className="text-red-400">{errors?.password?.message}</p>
-                )}
-              </div>
-              <Button type="submit" className="w-full">
-                Iniciar Sesión
-              </Button>
-              {error ? (
-                <div className="text-center text-bold text-red-500">
-                  Revisar credenciales
-                </div>
-              ) : (
-                ""
-              )}
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+          <h1>Bienvenido</h1>
+
+          <div className="form-group">
+            <label htmlFor="username">Usuario</label>
+            <input
+              {...register("username")}
+              id="username"
+              type="text"
+            />
+            {errors?.username?.message && (
+              <span className="error-text">{errors.username.message}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <div className="password-wrapper">
+              <input
+                {...register("password")}
+                id="password"
+                type={showPassword ? "text" : "password"}
+              />
+              <button
+                type="button"
+                className="toggle-password-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Ocultar" : "Mostrar"}
+              </button>
             </div>
-          </form>
-        </CardContent>
-      </Card>
+            {errors?.password?.message && (
+              <span className="error-text">{errors.password.message}</span>
+            )}
+          </div>
+
+          <button type="submit" className="submit-btn">
+            Iniciar Sesión
+          </button>
+
+          {error && <div className="api-error">Revisar credenciales</div>}
+        </form>
+      </div>
     </div>
   );
 }
-
